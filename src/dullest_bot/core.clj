@@ -1,5 +1,6 @@
 (ns dullest-bot.core
-  (:require [twitter.oauth :as oauth])
+  (:require [twitter.oauth :as oauth]
+            [twitter.api.restful :as restful])
   (:gen-class))
 
 (defonce app-consumer-key         (System/getenv "DULLEST_BOT_CONSUMER_KEY"))
@@ -11,6 +12,9 @@
                                    app-consumer-secret
                                    user-access-token
                                    user-access-token-secret))
+
+(defn tweet [status]
+  (restful/statuses-update :oauth-creds creds :params {:status status}))
 
 (defn -main
   "I don't do a whole lot ... yet."
